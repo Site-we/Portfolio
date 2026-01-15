@@ -4,117 +4,428 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DevPortfolio | Full Stack PHP Developer</title>
-    <link rel="stylesheet" href="style.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    
     <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+
+    <style>
+        /* =========================
+           CSS STYLES
+           ========================= */
+
+        /* --- Variables & Reset --- */
+        :root {
+            --bg-main: #0f172a;
+            --bg-alt: #162033;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #0ea5e9; /* Cyan */
+            --secondary: #6366f1; /* Indigo */
+            --gradient: linear-gradient(135deg, var(--primary), var(--secondary));
+            --font: 'Poppins', sans-serif;
+            --section-spacing: 6rem;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-main);
+            font-family: var(--font);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        /* --- Typography --- */
+        h1, h2, h3 { color: var(--text-main); font-weight: 700; line-height: 1.2; }
+        h1 { font-size: 3.5rem; margin: 1.5rem 0; }
+        h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+        h3 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+        p { color: var(--text-muted); margin-bottom: 1.5rem; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+
+        .text-gradient {
+            background: var(--gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            display: inline-block;
+        }
+
+        .container { width: 90%; max-width: 1200px; margin: 0 auto; }
+        .section-pad { padding: var(--section-spacing) 0; }
+        .bg-alt { background-color: var(--bg-alt); }
+
+        /* --- Animations --- */
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        .fade-in-up { opacity: 0; animation: fadeInUp 0.8s ease-out forwards; }
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        /* --- Navigation --- */
+        .navbar {
+            position: fixed; width: 100%; top: 0; z-index: 1000;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            transition: 0.4s ease;
+            padding: 1rem 0;
+        }
+        .navbar.sticky { padding: 0.8rem 0; background: rgba(15, 23, 42, 0.95); }
+
+        .nav-container { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 1.8rem; font-weight: 800; }
+        .logo span { color: var(--primary); }
+
+        .nav-links { display: flex; gap: 2rem; list-style: none; align-items: center; }
+        .nav-links a { font-weight: 600; font-size: 0.95rem; }
+        .nav-links a:hover { color: var(--primary); }
+
+        .btn-highlight {
+            background: var(--gradient);
+            padding: 0.6rem 1.8rem; border-radius: 50px;
+            color: white !important; box-shadow: 0 4px 15px rgba(14, 165, 233, 0.3);
+        }
+        .btn-highlight:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(14, 165, 233, 0.5); }
+
+        /* Hamburger Menu */
+        .menu-toggle { display: none; cursor: pointer; z-index: 1001;}
+        .bar { width: 28px; height: 3px; background-color: var(--text-main); margin: 6px 0; transition: 0.4s; border-radius: 2px;}
+
+        /* --- Hero Section --- */
+        .hero {
+            min-height: 100vh;
+            padding-top: 80px;
+            display: flex; align-items: center;
+            background: radial-gradient(circle at 70% 20%, rgba(14, 165, 233, 0.15), transparent 50%),
+                        radial-gradient(circle at 20% 80%, rgba(99, 102, 241, 0.15), transparent 50%);
+            overflow: hidden;
+        }
+
+        .hero-container {
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .hero-text { flex: 1; max-width: 600px; z-index: 2; }
+
+        .badge {
+            background: rgba(14, 165, 233, 0.1); color: var(--primary);
+            padding: 0.5rem 1rem; border-radius: 30px; font-size: 0.9rem; font-weight: 600;
+            display: inline-block; margin-bottom: 1rem; letter-spacing: 1px;
+            border: 1px solid rgba(14, 165, 233, 0.2);
+        }
+
+        .hero-btns { margin-top: 2.5rem; display: flex; gap: 1.5rem; }
+
+        .btn {
+            padding: 0.9rem 2.2rem; border-radius: 8px; font-weight: 700; cursor: pointer; transition: 0.3s; border: none; font-size: 1rem;
+        }
+        .btn-primary { background: var(--gradient); color: white; box-shadow: 0 5px 15px rgba(14, 165, 233, 0.4); }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(14, 165, 233, 0.6); }
+        .btn-secondary { background: transparent; border: 2px solid rgba(248, 250, 252, 0.2); color: var(--text-main); }
+        .btn-secondary:hover { border-color: var(--primary); color: var(--primary); background: rgba(14, 165, 233, 0.05); }
+
+        /* Hero Image Logic */
+        .hero-image {
+            flex: 1; position: relative; display: flex;
+            justify-content: flex-end; /* Align image right */
+            height: 600px; align-items: flex-end;
+        }
+
+        /* The glowing blob behind image */
+        .img-blob {
+            position: absolute; top: 50%; right: 0;
+            transform: translateY(-50%);
+            width: 500px; height: 500px;
+            background: var(--gradient);
+            opacity: 0.2; filter: blur(80px);
+            border-radius: 50%; z-index: 1;
+        }
+
+        .hero-image img {
+            max-height: 100%; width: auto; position: relative; z-index: 2;
+            margin-right: -5%; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3));
+        }
+
+        /* --- Cards & Grid --- */
+        .skills-grid, .projects-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .skill-card, .project-card {
+            background: var(--card-bg); padding: 2.5rem; border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.08); transition: 0.4s ease;
+            backdrop-filter: blur(10px);
+        }
+        .skill-card:hover, .project-card:hover {
+            transform: translateY(-10px); border-color: var(--primary);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+        }
+
+        .skill-icon { font-size: 2.5rem; color: var(--primary); margin-bottom: 1.5rem; }
+
+        .project-img {
+            height: 180px; border-radius: 12px; margin-bottom: 1.5rem;
+            background: linear-gradient(45deg, #1e293b, #0f172a);
+            position: relative; overflow: hidden;
+        }
+        .project-img::after {
+            content: ''; position: absolute; top: 50%; left: 50%;
+            width: 50%; height: 50%; background: var(--gradient);
+            filter: blur(40px); opacity: 0.3; transform: translate(-50%, -50%);
+        }
+
+        .tags { display: flex; gap: 0.5rem; margin-bottom: 1.5rem; flex-wrap: wrap; }
+        .tags span {
+            font-size: 0.75rem; background: rgba(255,255,255,0.05); padding: 0.3rem 0.8rem;
+            border-radius: 20px; color: var(--text-muted); font-weight: 600;
+        }
+        .link { color: var(--primary); font-weight: 700; font-size: 0.9rem; display: inline-flex; align-items: center; }
+
+        /* --- Contact --- */
+        .contact-wrapper { max-width: 700px; margin: 0 auto; }
+        .contact-form { display: flex; flex-direction: column; gap: 1.5rem; }
+        .input-group { display: flex; gap: 1.5rem; }
+        input, textarea {
+            width: 100%; padding: 1.2rem; background: var(--card-bg);
+            border: 2px solid rgba(255,255,255,0.05); border-radius: 10px;
+            color: white; outline: none; font-family: inherit; font-size: 1rem; transition: 0.3s;
+        }
+        input:focus, textarea:focus { border-color: var(--secondary); background: rgba(30, 41, 59, 1); }
+        .large-btn { width: 100%; padding: 1.2rem; font-size: 1.1rem; }
+
+        footer { text-align: center; padding: 3rem 0; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        /* --- Responsiveness --- */
+        @media (max-width: 1024px) {
+            h1 { font-size: 2.8rem; }
+            .hero-image { height: 500px; }
+            .img-blob { width: 400px; height: 400px; }
+        }
+
+        @media (max-width: 768px) {
+            :root { --section-spacing: 4rem; }
+            
+            /* Mobile Nav */
+            .menu-toggle { display: block; }
+            .menu-toggle.is-active .bar:nth-child(2) { opacity: 0; }
+            .menu-toggle.is-active .bar:nth-child(1) { transform: translateY(9px) rotate(45deg); }
+            .menu-toggle.is-active .bar:nth-child(3) { transform: translateY(-9px) rotate(-45deg); }
+
+            .nav-links {
+                position: fixed; top: 70px; left: -100%;
+                width: 100%; height: auto; flex-direction: column;
+                background: var(--bg-alt); padding: 2rem 0; gap: 0;
+                transition: 0.4s ease-in-out; border-bottom: 2px solid var(--primary);
+            }
+            .nav-links.active { left: 0; }
+            .nav-links li { width: 100%; text-align: center; }
+            .nav-links li a { display: block; padding: 1.5rem; font-size: 1.2rem; }
+            .btn-highlight { background: transparent; box-shadow: none; padding: 1.5rem; border-radius: 0; color: var(--primary) !important; }
+
+            /* Mobile Hero */
+            .hero-container { flex-direction: column-reverse; text-align: center; justify-content: center; padding-bottom: 2rem; }
+            .hero-image { height: 350px; width: 100%; justify-content: center; margin-bottom: 2rem; }
+            .hero-image img { margin-right: 0; max-height: 100%; }
+            .img-blob { width: 300px; height: 300px; left: 50%; transform: translate(-50%, -50%); }
+            .hero-text { max-width: 100%; }
+            h1 { font-size: 2.5rem; }
+            .hero-btns { justify-content: center; }
+
+            /* Mobile Form */
+            .input-group { flex-direction: column; gap: 1rem; }
+            .container { width: 92%; }
+        }
+    </style>
 </head>
 <body>
 
     <nav class="navbar">
-        <div class="logo">Dev<span>Portfolio</span>.</div>
-        <ul class="nav-links">
-            <li><a href="#home">Home</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#projects">Projects</a></li>
-            <li><a href="#contact" class="btn-highlight">Contact Me</a></li>
-        </ul>
-        <div class="menu-toggle" id="mobile-menu">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
+        <div class="container nav-container">
+            <div class="logo">Dev<span>Portfolio</span>.</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#about">About</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#contact" class="btn-highlight">Contact Me</a></li>
+            </ul>
+            <div class="menu-toggle" id="mobile-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
         </div>
     </nav>
 
     <section id="home" class="hero">
-        <div class="hero-content">
-            <span class="badge">Full Stack Developer</span>
-            <h1>I Build <span class="text-gradient">Secure</span> & <span class="text-gradient">Scalable</span> Web Solutions.</h1>
-            <p>Specializing in modern Frontend UIs and robust PHP Backends.</p>
-            <div class="hero-btns">
-                <a href="#projects" class="btn btn-primary">View Work</a>
-                <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+        <div class="container hero-container">
+            <div class="hero-text fade-in-up">
+                <span class="badge">Full Stack Developer</span>
+                <h1>Building <span class="text-gradient">Robust</span> Backends & <span class="text-gradient">Modern</span> Frontends.</h1>
+                <p>I'm a PHP specialist bridging the gap between server-side logic and interactive user interfaces.</p>
+                <div class="hero-btns">
+                    <a href="#projects" class="btn btn-primary">View My Work</a>
+                    <a href="#contact" class="btn btn-secondary">Let's Talk</a>
+                </div>
+            </div>
+            
+            <div class="hero-image fade-in-up delay-200">
+                <div class="img-blob"></div>
+                <img src="my-photo.png" alt="Developer Photo">
             </div>
         </div>
     </section>
 
-    <section id="about" class="container">
-        <h2 class="section-title">About Me</h2>
-        <div class="about-content" style="text-align: center; max-width: 800px; margin: 0 auto;">
-            <p>I am a passionate developer capable of building web applications from the ground up. I bridge the gap between graphical design and technical implementation, taking an active role on both sides and defining how the application looks as well as how it works.</p>
+    <section id="about" class="container section-pad">
+        <h2 class="section-title" style="text-align: center;">About Me</h2>
+        <div class="about-content fade-in-up" style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <p>I am a passionate developer capable of building web applications from the ground up. I bridge the gap between graphical design and technical implementation, taking an active role on both sides and defining how the application looks as well as how it works. My core strength lies in PHP ecosystems, ensuring data integrity and security while delivering smooth frontend experiences.</p>
         </div>
     </section>
 
-    <section id="skills" class="container">
-        <h2 class="section-title">Tech Stack</h2>
+    <section id="skills" class="container section-pad bg-alt">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">Tech Stack</h2>
         <div class="skills-grid">
-            <div class="skill-card">
+            <div class="skill-card fade-in-up">
+                <i class="fas fa-code skill-icon"></i>
                 <h3>Frontend</h3>
-                <p>HTML5, CSS3, JavaScript, React, Tailwind</p>
+                <p>HTML5, CSS3, JavaScript (ES6+), React, Tailwind CSS, Bootstrap</p>
             </div>
-            <div class="skill-card">
+            <div class="skill-card fade-in-up delay-100">
+                <i class="fas fa-server skill-icon"></i>
                 <h3>Backend</h3>
-                <p>PHP (8+), Laravel, Node.js, REST APIs</p>
+                <p>PHP (7/8), Laravel, Symfony, Node.js, RESTful APIs</p>
             </div>
-            <div class="skill-card">
+            <div class="skill-card fade-in-up delay-200">
+                <i class="fas fa-database skill-icon"></i>
                 <h3>Database</h3>
-                <p>MySQL, PostgreSQL, MongoDB</p>
+                <p>MySQL/MariaDB, PostgreSQL, MongoDB, Redis</p>
             </div>
-            <div class="skill-card">
-                <h3>Tools</h3>
-                <p>Git, Docker, Linux, Apache/Nginx</p>
+            <div class="skill-card fade-in-up delay-300">
+                <i class="fas fa-terminal skill-icon"></i>
+                <h3>DevOps & Tools</h3>
+                <p>Git, Docker, Linux Server Mgmt, Apache/Nginx, Composer</p>
             </div>
         </div>
     </section>
 
-    <section id="projects" class="container">
-        <h2 class="section-title">Featured Projects</h2>
+    <section id="projects" class="container section-pad">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">Featured Projects</h2>
         <div class="projects-grid">
-            <div class="project-card">
+            <div class="project-card fade-in-up">
                 <div class="project-img"></div>
                 <div class="project-info">
-                    <h3>E-Commerce Platform</h3>
-                    <p>A full PHP/MySQL shopping cart with Stripe integration.</p>
+                    <h3>E-Commerce Core</h3>
+                    <p>A scalable PHP shopping cart system integrated with Stripe payment gateway and inventory tracking.</p>
+                    <div class="tags"><span>PHP</span><span>MySQL</span><span>Stripe API</span></div>
                     <a href="#" class="link">View Code &rarr;</a>
                 </div>
             </div>
-            <div class="project-card">
+            <div class="project-card fade-in-up delay-100">
                 <div class="project-img"></div>
                 <div class="project-info">
-                    <h3>Task Manager App</h3>
-                    <p>AJAX-powered dashboard for real-time team collaboration.</p>
+                    <h3>Real-time Task Manager</h3>
+                    <p>AJAX-powered dashboard allowing teams to collaborate on tasks without page reloads.</p>
+                    <div class="tags"><span>JS</span><span>PHP AJAX</span><span>Tailwind</span></div>
                     <a href="#" class="link">View Code &rarr;</a>
                 </div>
             </div>
-            <div class="project-card">
+            <div class="project-card fade-in-up delay-200">
                 <div class="project-img"></div>
                 <div class="project-info">
-                    <h3>CMS System</h3>
-                    <p>Custom PHP Content Management System built from scratch.</p>
+                    <h3>Custom CMS</h3>
+                    <p>Built from scratch PHP Content Management System with role-based access control.</p>
+                    <div class="tags"><span>PHP OOP</span><span>MVC Pattern</span><span>Security</span></div>
                     <a href="#" class="link">View Code &rarr;</a>
                 </div>
             </div>
         </div>
     </section>
 
-    <section id="contact" class="container contact-section">
-        <h2 class="section-title">Get In Touch</h2>
-        <div class="contact-wrapper">
+    <section id="contact" class="container section-pad bg-alt">
+        <h2 class="section-title" style="text-align: center; margin-bottom: 3rem;">Get In Touch</h2>
+        <div class="contact-wrapper fade-in-up">
             <form id="contactForm" class="contact-form">
                 <div class="input-group">
                     <input type="text" id="name" required placeholder="Your Name">
                     <input type="email" id="email" required placeholder="Your Email">
                 </div>
-                <textarea id="message" rows="5" required placeholder="Tell me about your project..."></textarea>
-                <button type="submit" class="btn btn-primary">Send Message</button>
+                <textarea id="message" rows="5" required placeholder="How can I help you?"></textarea>
+                <button type="submit" class="btn btn-primary large-btn">Send Message</button>
             </form>
         </div>
     </section>
 
     <footer>
-        <p>&copy; <span id="year"></span> DevPortfolio. Built with HTML, CSS & JS.</p>
+        <div class="container">
+            <p>&copy; <span id="year"></span> DevPortfolio. Built with HTML, CSS & JS.</p>
+        </div>
     </footer>
 
-    <script src="script.js"></script>
+    <script>
+        // 1. Dynamic Year
+        document.getElementById("year").textContent = new Date().getFullYear();
+
+        // 2. Sticky Navbar Effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.navbar');
+            navbar.classList.toggle('sticky', window.scrollY > 50);
+        });
+
+        // 3. Mobile Menu Toggle
+        const menuToggle = document.querySelector('#mobile-menu');
+        const navLinks = document.querySelector('.nav-links');
+
+        menuToggle.addEventListener('click', () => {
+            menuToggle.classList.toggle('is-active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links li a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuToggle.classList.remove('is-active');
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // 4. Contact Form Simulation
+        const contactForm = document.getElementById('contactForm');
+
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const submitBtn = contactForm.querySelector('button');
+            const originalText = submitBtn.innerText;
+            
+            submitBtn.innerText = "Sending...";
+            submitBtn.style.opacity = "0.7";
+            submitBtn.disabled = true;
+
+            setTimeout(() => {
+                alert(`Thanks ${name}! This is a demo. On a real server, PHP would process this.`);
+                
+                contactForm.reset();
+                submitBtn.innerText = "Message Sent Successfully!";
+                submitBtn.style.background = "linear-gradient(135deg, #10b981, #059669)";
+                submitBtn.style.opacity = "1";
+                
+                setTimeout(() => {
+                    submitBtn.innerText = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = ""; 
+                }, 3000);
+            }, 1500);
+        });
+    </script>
 </body>
 </html>
